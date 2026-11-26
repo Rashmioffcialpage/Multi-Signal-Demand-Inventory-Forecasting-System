@@ -145,6 +145,6 @@ models/holdout_model_bundle.joblib.
 - Inventory recommendations use assumed stock and lead times.
 - Dynamic inventory simulation, MLflow tracking, and final holdout
   evaluation remain planned.
-## Author
+### Final evaluation dashboard
 
-Rashmi Thimmaraju
+![DemandLens final holdout results](screenshots/holdout-results.png)
