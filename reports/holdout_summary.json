@@ -1,0 +1,23 @@
+{
+  "evaluation": "Reserved final holdout",
+  "origin": "2016-03-27",
+  "test_start": "2016-03-28",
+  "test_end": "2016-04-24",
+  "series": 20,
+  "forecast_rows": 560,
+  "lightgbm_mae": 1.2955502419676825,
+  "lightgbm_wape_percent": 75.182190207451,
+  "baseline_mae": 1.7625,
+  "baseline_wape_percent": 102.27979274611398,
+  "mae_improvement_percent": 26.493603292613756,
+  "raw_crossing_percent": 0.0,
+  "coverage_percent": 91.78571428571428,
+  "mean_interval_width_units": 4.378770505422281,
+  "mean_interval_score": 5.874322724145828,
+  "p10_pinball_loss": 0.16946428630722954,
+  "p50_pinball_loss": 0.6477751209838413,
+  "p90_pinball_loss": 0.41796798610735325,
+  "below_p10_percent": 0.7142857142857143,
+  "above_p90_percent": 7.5,
+  "test_evaluated": true
+}

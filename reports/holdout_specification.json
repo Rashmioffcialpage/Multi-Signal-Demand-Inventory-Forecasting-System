@@ -1,0 +1,48 @@
+{
+  "origin": "2016-03-27",
+  "test_start": "2016-03-28",
+  "test_end": "2016-04-24",
+  "model_parameters": {
+    "objective": "quantile",
+    "n_estimators": 300,
+    "learning_rate": 0.05,
+    "num_leaves": 15,
+    "min_child_samples": 50,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "n_jobs": 2,
+    "verbosity": -1
+  },
+  "quantiles": [
+    0.1,
+    0.5,
+    0.9
+  ],
+  "features": [
+    "series_id",
+    "dept_id",
+    "event_name_1",
+    "event_type_1",
+    "event_name_2",
+    "event_type_2",
+    "sales_lag_28",
+    "sales_lag_35",
+    "sales_lag_42",
+    "sales_lag_56",
+    "sales_mean_7",
+    "sales_mean_28",
+    "sales_mean_56",
+    "sales_std_28",
+    "zero_share_28",
+    "price_lag_28",
+    "day_of_week",
+    "day_of_month",
+    "month_number",
+    "year_number",
+    "time_index",
+    "weekday_sin",
+    "weekday_cos",
+    "snap_CA"
+  ],
+  "conservative_upper_adjustment_used": false
+}

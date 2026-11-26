@@ -110,7 +110,30 @@ python -m streamlit run dashboard.py
 - Category encoders are fitted separately within each fold.
 - Baseline and LightGBM predictions are matched on identical observations.
 - March 28–April 24, 2016 is reserved and remains unevaluated.
+## Final holdout results
 
+Models trained using observations through March 27, 2016 were
+evaluated on March 28–April 24, 2016.
+
+The holdout contains 560 forecasts across 20 product series.
+Model settings were retained from validation.
+
+| Metric | Seasonal naive | LightGBM P50 |
+|---|---:|---:|
+| MAE | 1.763 | 1.296 |
+| WAPE | 102.28% | 75.18% |
+
+LightGBM reduced holdout MAE by 26.49%.
+
+The nominal 80% P10–P90 interval achieved 91.79% coverage,
+with a mean width of 4.379 units. Actual demand exceeded P90
+on 7.50% of observations; no quantile crossings occurred.
+
+These results describe 20 selected food-product series from
+one store and one 28-day holdout, not all M5 products or stores.
+
+The fitted models and category encoder are saved locally in
+models/holdout_model_bundle.joblib.
 ## Limitations and planned work
 
 - Results describe a small subset of one store.
