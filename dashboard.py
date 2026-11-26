@@ -1,6 +1,6 @@
 from pathlib import Path
 import sqlite3
-
+import json
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
@@ -152,10 +152,10 @@ st.caption(
     "Metrics above use the original bounds after crossing "
     "adjustment. Coverage is descriptive validation performance."
 )
-
-forecast_tab, results_tab, notes_tab = st.tabs([
+forecast_tab, results_tab, inventory_tab, notes_tab = st.tabs([
     "Forecast",
     "Product results",
+    "Inventory",
     "Method & limitations",
 ])
 
@@ -284,7 +284,140 @@ with results_tab:
         hide_index=True,
         use_container_width=True,
     )
+with inventory_tab:
+    st.subheader("Inventory planning scenario")
 
+    inventory_file = ROOT / "reports" / "inventory_recommendations.csv"
+    assumptions_file = ROOT / "reports" / "inventory_assumptions.json"
+
+    if not inventory_file.exists() or not assumptions_file.exists():
+        st.info(
+            "Run python inventory_recommendations.py "
+            "to generate this scenario."
+        )
+    else:
+        inventory = pd.read_csv(inventory_file)
+        assumptions = json.loads(
+            assumptions_file.read_text(encoding="utf-8")
+        )
+
+        scenario_fold = int(assumptions["validation_fold"])
+        scenario_origin = str(assumptions["origin"])
+
+        st.warning(
+            "Illustrative recommendations using assumed stock levels. "
+            "These are not observed inventory records or guaranteed "
+            "service levels."
+        )
+
+        st.caption(
+            f"Scenario: Fold {scenario_fold} · "
+            f"Origin: {scenario_origin} · "
+            f"Lead time: {assumptions['lead_time_days']} days · "
+            f"Review period: {assumptions['review_period_days']} days"
+        )
+
+        # The CSV currently contains only the Fold 3 scenario.
+        if str(fold) != str(scenario_fold):
+            st.info(
+                f"Select Fold {scenario_fold} in the sidebar "
+                "to view its inventory recommendations."
+            )
+
+        elif scenario_origin != origin_text:
+            st.error(
+                "Scenario origin does not match the selected forecast. "
+                "Regenerate inventory_recommendations.csv."
+            )
+
+        else:
+            product_inventory = inventory.loc[
+                inventory["series_id"] == series_id
+            ]
+
+            if len(product_inventory) != 1:
+                st.error(
+                    "Expected exactly one recommendation "
+                    "for the selected product."
+                )
+            else:
+                row = product_inventory.iloc[0]
+
+                stock = int(str(row["assumed_on_hand"]))
+                target = int(str(row["target_stock_units"]))
+                order = int(str(row["recommended_order_units"]))
+
+                a, b, c = st.columns(3)
+                a.metric("Assumed stock on hand", stock)
+                b.metric("Target stock", target)
+                c.metric("Recommended order", order)
+
+                st.write(
+                    "Central 14-day planning estimate: "
+                    f"**{float(row['central_protection_units']):.2f} units**"
+                )
+
+                st.write(
+                    "Historical 14-day block P90: "
+                    f"**{float(row['historical_block_p90_units']):.2f} units**"
+                )
+
+                risk_flag = (
+                    str(row["pre_arrival_risk_flag"]).strip().lower()
+                    == "true"
+                )
+
+                if risk_flag:
+                    st.warning(
+                        "Assumed available stock is below the central "
+                        "lead-time sales estimate. An order arriving "
+                        "after seven days may not prevent an earlier shortage."
+                    )
+                else:
+                    st.info(
+                        "Assumed available stock covers the central "
+                        "lead-time estimate. This does not rule out shortages."
+                    )
+
+                st.caption(
+                    "Target stock is the rounded-up maximum of the "
+                    "summed daily P50 forecasts and historical block P90. "
+                    "Neither is a calibrated lead-time demand quantile."
+                )
+
+            st.divider()
+            st.subheader("All product recommendations")
+            st.caption(
+                "This table covers every product in the scenario, "
+                "regardless of the sidebar metric scope."
+            )
+
+            display_columns = [
+                "series_id",
+                "central_protection_units",
+                "historical_block_p90_units",
+                "target_stock_units",
+                "assumed_on_hand",
+                "recommended_order_units",
+                "pre_arrival_risk_flag",
+            ]
+
+            st.dataframe(
+                inventory[display_columns].round(2),
+                hide_index=True,
+                use_container_width=True,
+            )
+
+            st.download_button(
+                "Download inventory recommendations",
+                data=inventory.to_csv(index=False).encode("utf-8"),
+                file_name="demandlens_inventory_scenario.csv",
+                mime="text/csv",
+                key="inventory_download",
+            )
+
+            with st.expander("Scenario assumptions"):
+                st.json(assumptions)
 with notes_tab:
     st.markdown("""
 - **Scope:** 20 food-product series from store CA_1.

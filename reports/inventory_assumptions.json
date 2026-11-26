@@ -1,0 +1,21 @@
+{
+  "scenario": "Illustrative inventory planning snapshot",
+  "validation_fold": 3,
+  "origin": "2016-02-28",
+  "lead_time_days": 7,
+  "review_period_days": 7,
+  "history_days": 364,
+  "assumed_on_hand_per_product": 5,
+  "assumed_on_order_per_product": 0,
+  "assumed_backorders_per_product": 0,
+  "policy": "Order up to the ceiling of the larger of summed daily P50 forecasts and historical block P90.",
+  "limitations": [
+    "Inventory inputs are assumptions, not observed stock.",
+    "Historical block P90 is not a forecast demand quantile.",
+    "No guaranteed service level.",
+    "No costs, capacity limits, or minimum order quantities.",
+    "Recorded sales may understate unconstrained demand.",
+    "This is a recommendation snapshot, not a dynamic simulation."
+  ],
+  "test_evaluated": false
+}

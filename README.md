@@ -30,7 +30,28 @@ observations exceeded P90, showing uneven tail calibration.
 A separate conservative upper-bound scenario uses errors from
 earlier folds only. It is exploratory and does not guarantee
 per-product coverage or inventory service levels.
+## Inventory planning scenario
 
+An illustrative order-up-to recommendation for each product:
+
+- 7-day supplier lead time.
+- 7-day review period.
+- Assumed stock of 5 units per product.
+- No orders in transit or backorders.
+- Historical sales restricted to dates available at the forecast origin.
+
+The target stock is the rounded-up maximum of:
+1. The next 14 days of summed P50 forecasts.
+2. The historical 90th percentile of non-overlapping 14-day sales totals.
+
+Recommended order quantity is the positive difference between
+target stock and inventory position.
+
+The dashboard includes product-level recommendations, a pre-arrival
+shortage-risk flag, assumptions, and downloadable results.
+
+This is a planning snapshot, not a dynamic inventory simulation.
+It does not guarantee an inventory service level.
 ## Setup
 
 Use Python 3.10 or newer.
@@ -98,7 +119,9 @@ python -m streamlit run dashboard.py
 - Daily quantiles cannot simply be summed into lead-time demand quantiles.
 - Inventory reorder simulation, MLflow tracking, and final holdout
   evaluation are planned; they are not implemented yet.
-
+- Inventory recommendations use assumed stock and lead times.
+- Dynamic inventory simulation, MLflow tracking, and final holdout
+  evaluation remain planned.
 ## Author
 
 Rashmi Thimmaraju
