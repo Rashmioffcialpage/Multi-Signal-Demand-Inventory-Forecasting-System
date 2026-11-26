@@ -1,0 +1,11 @@
+{
+  "model": "lightgbm_p50",
+  "folds": 3,
+  "forecast_rows": 1680,
+  "pooled_mae": 1.6469002690960235,
+  "pooled_wape_percent": 85.63269737175239,
+  "baseline_mae": 2.017261904761905,
+  "baseline_wape_percent": 104.89012689569793,
+  "mae_improvement_percent": 18.3596207706899,
+  "test_evaluated": false
+}

@@ -1,0 +1,8 @@
+{
+  "rows": 36600,
+  "series": 20,
+  "features": 24,
+  "first_date": "2011-04-22",
+  "last_date": "2016-04-24",
+  "missing_historical_prices": 3284
+}

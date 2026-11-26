@@ -1,0 +1,11 @@
+{
+  "model": "seasonal_naive_7",
+  "folds": 3,
+  "horizon_days": 28,
+  "forecast_rows": 1680,
+  "pooled_mae": 2.017261904761905,
+  "pooled_wape_percent": 104.89012689569793,
+  "reserved_test_start": "2016-03-28",
+  "reserved_test_end": "2016-04-24",
+  "test_evaluated": false
+}

@@ -1,0 +1,13 @@
+{
+  "store": "CA_1",
+  "category": "FOODS",
+  "selection_rule": "First 20 item IDs alphabetically",
+  "series": 20,
+  "rows": 38260,
+  "days_per_series": 1913,
+  "start_date": "2011-01-29",
+  "end_date": "2016-04-24",
+  "zero_sales_rows": 21085,
+  "missing_price_rows": 3738,
+  "positive_sales_with_missing_price": 0
+}

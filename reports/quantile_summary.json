@@ -1,0 +1,16 @@
+{
+  "forecast_rows": 1680,
+  "nominal_coverage_percent": 80.0,
+  "raw_crossing_percent": 0.7142857142857143,
+  "crossing_adjustment": "Expand bounds to include all three forecasts; preserve P50",
+  "metrics_use_adjusted_bounds": true,
+  "coverage_percent": 85.6547619047619,
+  "mean_interval_width_units": 4.442128330352517,
+  "mean_interval_score": 7.250077138934795,
+  "p10_pinball_loss": 0.1914285716138664,
+  "p50_pinball_loss": 0.8234501345480117,
+  "p90_pinball_loss": 0.533579142279613,
+  "below_p10_percent": 0.8928571428571428,
+  "above_p90_percent": 13.452380952380953,
+  "test_evaluated": false
+}

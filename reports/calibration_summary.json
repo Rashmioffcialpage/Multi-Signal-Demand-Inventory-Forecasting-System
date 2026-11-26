@@ -1,0 +1,37 @@
+{
+  "method": "Historical pooled additive upper adjustment",
+  "evaluation_folds": [
+    2,
+    3
+  ],
+  "p50_changed": false,
+  "p10_changed": false,
+  "test_evaluated": false,
+  "limitation": "Pooled daily adjustment; no guaranteed per-product or inventory lead-time coverage.",
+  "fold_results": [
+    {
+      "fold": 2,
+      "calibration_rows": 560,
+      "evaluation_rows": 560,
+      "upper_adjustment_units": 0.9710312606351872,
+      "original_above_p90_percent": 13.392857142857142,
+      "adjusted_above_p90_percent": 7.678571428571429,
+      "original_coverage_percent": 84.28571428571429,
+      "adjusted_coverage_percent": 90.0,
+      "original_mean_width": 4.427259779912382,
+      "adjusted_mean_width": 5.398291040547568
+    },
+    {
+      "fold": 3,
+      "calibration_rows": 1120,
+      "evaluation_rows": 560,
+      "upper_adjustment_units": 0.8317762396222284,
+      "original_above_p90_percent": 9.464285714285714,
+      "adjusted_above_p90_percent": 5.357142857142857,
+      "original_coverage_percent": 90.53571428571429,
+      "adjusted_coverage_percent": 94.64285714285714,
+      "original_mean_width": 4.8976608448036645,
+      "adjusted_mean_width": 5.729437084425892
+    }
+  ]
+}
