@@ -1,0 +1,35 @@
+# Python environments
+.venv/
+.venv-check/
+venv/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local data and generated databases
+data/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Trained models and local experiment storage
+models/
+mlruns/
+mlartifacts/
+tracking/
+
+# Credentials and secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+kaggle.json
+
+# macOS files
+.DS_Store
