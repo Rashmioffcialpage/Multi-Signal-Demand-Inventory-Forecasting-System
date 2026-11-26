@@ -431,7 +431,88 @@ with notes_tab:
   learned only from earlier validation folds.
 - **Demand limitation:** recorded sales may differ from
   unconstrained demand when stockouts occur.
-- **Inventory:** daily quantiles cannot simply be summed to
-  obtain lead-time demand quantiles.
-- **Final test:** March 28–April 24, 2016 remains unevaluated.
+- **Inventory:** recommendations use assumed stock and lead
+  times. Daily quantiles cannot simply be summed to obtain
+  lead-time demand quantiles.
+- **Final test:** March 28–April 24, 2016 was evaluated
+  separately using the model settings retained from validation.
+- **Dashboard scope:** the forecast chart displays validation
+  folds, not final holdout predictions.
 """)
+
+    holdout_file = ROOT / "reports" / "holdout_summary.json"
+
+    if holdout_file.exists():
+        holdout = json.loads(
+            holdout_file.read_text(encoding="utf-8")
+        )
+
+        st.subheader("Final holdout results")
+
+        st.caption(
+            f"{holdout['test_start']} to {holdout['test_end']} · "
+            f"{holdout['forecast_rows']} forecasts · "
+            f"{holdout['series']} product series"
+        )
+
+        h1, h2, h3 = st.columns(3)
+
+        h1.metric(
+            "LightGBM MAE",
+            f"{holdout['lightgbm_mae']:.3f} units",
+        )
+
+        h2.metric(
+            "Seasonal-naive MAE",
+            f"{holdout['baseline_mae']:.3f} units",
+        )
+
+        improvement = holdout.get("mae_improvement_percent")
+
+        h3.metric(
+            "MAE reduction",
+            f"{improvement:.2f}%"
+            if improvement is not None
+            else "N/A",
+        )
+
+        st.info(
+            f"The nominal 80% interval achieved "
+            f"{holdout['coverage_percent']:.2f}% coverage "
+            "on this holdout, indicating conservative intervals. "
+            "These results apply to the selected products "
+            "and evaluation period."
+        )
+
+        comparison = pd.DataFrame([
+            {
+                "Model": "Seasonal naive",
+                "MAE": holdout["baseline_mae"],
+                "WAPE (%)": holdout["baseline_wape_percent"],
+            },
+            {
+                "Model": "LightGBM P50",
+                "MAE": holdout["lightgbm_mae"],
+                "WAPE (%)": holdout["lightgbm_wape_percent"],
+            },
+        ])
+
+        st.dataframe(
+            comparison.round(3),
+            hide_index=True,
+            use_container_width=True,
+        )
+
+        st.download_button(
+            "Download holdout summary",
+            data=json.dumps(holdout, indent=2),
+            file_name="demandlens_holdout_summary.json",
+            mime="application/json",
+            key="holdout_summary_download",
+        )
+
+    else:
+        st.warning(
+            "Holdout summary not found. Place the generated "
+            "holdout_summary.json file in reports/ to display results."
+        )
