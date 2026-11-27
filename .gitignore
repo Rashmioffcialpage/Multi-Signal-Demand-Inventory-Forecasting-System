@@ -2,7 +2,7 @@
 .venv/
 .venv-check/
 venv/
-
+repro_checks/
 # Python caches
 __pycache__/
 *.py[cod]
@@ -30,6 +30,8 @@ tracking/
 !.env.example
 .streamlit/secrets.toml
 kaggle.json
-
+!data/
+data/*
+!data/demandlens.db
 # macOS files
 .DS_Store

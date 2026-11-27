@@ -93,9 +93,7 @@ selected = fold_data.loc[
     fold_data["series_id"] == series_id
 ].sort_values("date").copy()
 
-selected = fold_data.loc[
-    fold_data["series_id"] == series_id
-].sort_values("date").copy()
+
 
 origin = selected["origin"].iloc[0]
 origin_text = origin.strftime("%Y-%m-%d")
