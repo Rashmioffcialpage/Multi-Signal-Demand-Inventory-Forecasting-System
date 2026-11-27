@@ -316,7 +316,9 @@ Local data, databases, model bundles, virtual environments, and MLflow storage a
 - MLflow currently imports reports rather than tracking training directly.
 - A full clean-environment pipeline rebuild remains to be verified.
 - Public dashboard deployment is not yet available.
+## Live Demo
 
+[Open the DemandLens dashboard](https://multi-signal-demand-inventory-forecasting-system-hdpcozrzldxdq.streamlit.app/)
 ## Author
 
 **Rashmi Thimmaraju**
